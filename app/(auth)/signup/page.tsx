@@ -1,0 +1,10 @@
+// app/signup/page.tsx
+import SignUpForm from "@/components/auth/SignUpForm"
+
+export default function SignUpPage() {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-blue-100 p-4">
+      <SignUpForm />
+    </div>
+  )
+}

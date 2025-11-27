@@ -1,9 +1,9 @@
 // lib/database.ts
 import Database from 'better-sqlite3'
 
-const db = new Database('database.db')
+const db = new Database('expenses.db')
 
-// Initialize tables if they don't exist
+// Initialize tables
 db.exec(`
   CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -13,12 +13,16 @@ db.exec(`
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
   );
 
-  CREATE TABLE IF NOT EXISTS expenses (
+  CREATE TABLE IF NOT EXISTS transactions (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER NOT NULL,
     amount DECIMAL(10,2) NOT NULL,
+    type TEXT NOT NULL CHECK (type IN ('expense', 'income')),
     description TEXT NOT NULL,
-    category TEXT NOT NULL,
+    category TEXT,
+    subcategory TEXT,
+    income_source TEXT,
+    remark TEXT,
     date DATE NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users (id)
